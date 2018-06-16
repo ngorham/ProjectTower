@@ -56,6 +56,7 @@ public class LoadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position){
                 Intent intent = new Intent(context, GameActivity.class);
+                intent.putExtra(SF_POSITION, position + 1);
                 startActivity(intent);
             }
         });
