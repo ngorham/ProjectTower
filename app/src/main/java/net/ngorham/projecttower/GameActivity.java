@@ -1,32 +1,40 @@
 package net.ngorham.projecttower;
 
-import android.content.Intent;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 /**
  * Project Tower
- * MainActivity.java
- * Main
- * Purpose: Displays a list of menu options
+ * GameActivity.java
+ * Edit
+ * Purpose: Main loop
  *
  * @author Neil Gorham
  * @version 1.0 06/15/2018
  *
  */
 
-public class MainActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
     //Private constants
-    private final String TAG = "MainActivity";
+    private final String TAG = "GameActivity";
+    //Private variables
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
         Log.d(TAG, "INSIDE onCreate: called");
+        context = this;
+        int position = getIntent().getIntExtra(LoadActivity.SF_POSITION, 0);
+        if(position > 0){
+            Toast.makeText(getApplicationContext(), "SavedFile position: " + position, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "GameActivity", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -69,25 +77,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart(){
         super.onRestart();
         Log.d(TAG, "INSIDE onRestart: called");
-    }
-
-    //On click start new game
-    public void newGame(View view){
-        Toast.makeText(getApplicationContext(), "New Game clicked", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
-    }
-
-    //On click load saved game
-    public void loadGame(View view){
-        Toast.makeText(getApplicationContext(), "Load Game clicked", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoadActivity.class);
-        startActivity(intent);
-    }
-
-    //On click exit game
-    public void exit(View view){
-        Toast.makeText(getApplicationContext(), "Exit Game clicked", Toast.LENGTH_SHORT).show();
-        finish();
     }
 }
