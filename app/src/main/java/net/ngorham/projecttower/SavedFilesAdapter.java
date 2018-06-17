@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class SavedFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //Private constants
-    private final String TAG = "TallyCounterAdapter";
+    private final String TAG = "SavedFilesAdapter";
     private final int SAVED_FILES_TYPE = 0;
     //Private variables
     private Context context;
@@ -96,5 +96,7 @@ public class SavedFilesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public void setSavedFiles(ArrayList<SavedFile> savedFiles){ this.savedFiles = savedFiles; }
+    public void setSavedFiles(ArrayList<SavedFile> sf){ savedFiles = sf; }
+
+    public ArrayList<SavedFile> getSavedFiles(){ return savedFiles; }
 }

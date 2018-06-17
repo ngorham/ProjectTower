@@ -1,0 +1,6 @@
+Test file
+key->value
+key=>value
+key=value
+key>value
+key-value

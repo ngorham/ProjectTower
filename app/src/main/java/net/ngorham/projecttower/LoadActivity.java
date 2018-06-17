@@ -2,6 +2,7 @@ package net.ngorham.projecttower;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -42,6 +47,7 @@ public class LoadActivity extends AppCompatActivity {
         recycler = findViewById(R.id.recycler);
         //Set up Layout Manager
         recycler.setLayoutManager(new LinearLayoutManager(this));
+        readFiles();
         ArrayList<SavedFile> savedFiles = new ArrayList<>();
         savedFiles.add(new SavedFile());
         savedFiles.add(new SavedFile());
@@ -102,5 +108,43 @@ public class LoadActivity extends AppCompatActivity {
     protected void onRestart(){
         super.onRestart();
         Log.d(TAG, "INSIDE onRestart: called");
+    }
+
+    private void readFiles(){
+        AssetManager assetManager = context.getAssets();
+        //String fileName;
+        String line = null;
+        BufferedReader reader = null;
+        try{
+            //fileName = "test00.txt";
+            String[] paths = assetManager.list("test");
+            //InputStream in = assetManager.open(fileName, AssetManager.ACCESS_UNKNOWN);
+            for(int i = 0; i < paths.length; i++){
+                Log.d(TAG, "path: " + paths[i]);
+                InputStream in = assetManager.open("test/" + paths[i], AssetManager.ACCESS_UNKNOWN);
+                if(in == null){ return; }
+                StringBuilder sBuilder = new StringBuilder();
+                reader = new BufferedReader(
+                        new InputStreamReader(in, "UTF-8"));
+                while((line = reader.readLine()) != null){
+                    //process line
+                    sBuilder.append(line);
+                    sBuilder.append("\n");
+                }
+                in.close();
+                Log.d(TAG, "File" + i + ":\n" + sBuilder.toString());
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        } finally {
+            if(reader != null){
+                try {
+                    reader.close();
+                } catch(IOException e){
+                    e.printStackTrace();
+
+                }
+            }
+        }
     }
 }
