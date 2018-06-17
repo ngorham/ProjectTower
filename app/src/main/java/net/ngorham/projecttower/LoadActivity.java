@@ -117,17 +117,32 @@ public class LoadActivity extends AppCompatActivity {
         BufferedReader reader = null;
         try{
             //fileName = "test00.txt";
-            String[] paths = assetManager.list("test");
+            String[] paths = assetManager.list("enemy");
             //InputStream in = assetManager.open(fileName, AssetManager.ACCESS_UNKNOWN);
             for(int i = 0; i < paths.length; i++){
                 Log.d(TAG, "path: " + paths[i]);
-                InputStream in = assetManager.open("test/" + paths[i], AssetManager.ACCESS_UNKNOWN);
+                InputStream in = assetManager.open("enemy/" + paths[i], AssetManager.ACCESS_UNKNOWN);
                 if(in == null){ return; }
                 StringBuilder sBuilder = new StringBuilder();
                 reader = new BufferedReader(
                         new InputStreamReader(in, "UTF-8"));
                 while((line = reader.readLine()) != null){
                     //process line
+                    String[] args = line.split(",");
+                    int id = Integer.parseInt(args[0]);
+                    String name = args[1];
+                    String createdOn = args[2];
+                    String lastModified = args[3];
+                    int currentHP = Integer.parseInt(args[4]);
+                    int maxHP = Integer.parseInt(args[5]);
+                    int currentAP = Integer.parseInt(args[6]);
+                    int maxAP = Integer.parseInt(args[7]);
+                    int ATK = Integer.parseInt(args[8]);
+                    int DEF = Integer.parseInt(args[9]);
+                    int SPD = Integer.parseInt(args[10]);
+                    int damage = Integer.parseInt(args[11]);
+                    Enemy enemy = new Enemy(id, name, createdOn, lastModified, currentHP, maxHP, currentAP, maxAP, ATK, DEF, SPD, damage);
+                    Log.d(TAG, enemy.toString());
                     sBuilder.append(line);
                     sBuilder.append("\n");
                 }

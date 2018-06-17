@@ -26,21 +26,10 @@
         android:gravity="center"
         android:onClick="newGame"
         android:text="@string/new_game"
-        app:layout_constraintBottom_toTopOf="@id/text_load_game"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_app_name" />
-    <TextView
-        android:id="@+id/text_load_game"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:onClick="loadGame"
-        android:text="@string/load_game"
         app:layout_constraintBottom_toTopOf="@id/text_exit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_new_game" />
+        app:layout_constraintTop_toBottomOf="@+id/text_app_name" />
     <TextView
         android:id="@+id/text_exit"
         android:layout_width="match_parent"
@@ -51,5 +40,5 @@
         android:text="@string/exit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_load_game" />
+        app:layout_constraintTop_toBottomOf="@id/text_new_game" />
 </android.support.constraint.ConstraintLayout>

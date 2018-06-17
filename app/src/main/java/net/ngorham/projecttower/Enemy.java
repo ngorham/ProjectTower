@@ -112,7 +112,7 @@ public class Enemy {
                 + "\nmaxAP = " + maxAP
                 + "\nATK = " + ATK
                 + "\nDEF = " + DEF
-                + "\nSPD + " + SPD
+                + "\nSPD = " + SPD
                 + "\ndamage = " + damage;
     }
 }

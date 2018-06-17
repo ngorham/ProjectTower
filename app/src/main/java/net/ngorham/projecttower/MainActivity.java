@@ -21,12 +21,19 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
     //Private constants
     private final String TAG = "MainActivity";
+    //Private variables
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "INSIDE onCreate: called");
+        sessionManager = new SessionManager(getApplication());
+        if(sessionManager.hasSession()){
+            Intent intent = new Intent(this, GameActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -75,13 +82,6 @@ public class MainActivity extends AppCompatActivity {
     public void newGame(View view){
         Toast.makeText(getApplicationContext(), "New Game clicked", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
-    }
-
-    //On click load saved game
-    public void loadGame(View view){
-        Toast.makeText(getApplicationContext(), "Load Game clicked", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, LoadActivity.class);
         startActivity(intent);
     }
 

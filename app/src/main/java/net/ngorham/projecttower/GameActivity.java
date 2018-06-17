@@ -1,6 +1,7 @@
 package net.ngorham.projecttower;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
     private final String TAG = "GameActivity";
     //Private variables
     private Context context;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +31,14 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         Log.d(TAG, "INSIDE onCreate: called");
         context = this;
-        int position = getIntent().getIntExtra(LoadActivity.SF_POSITION, 0);
-        if(position > 0){
-            Toast.makeText(getApplicationContext(), "SavedFile position: " + position, Toast.LENGTH_SHORT).show();
+        sessionManager = new SessionManager(getApplication());
+        if(sessionManager.hasSession()){
+            //loadSavedFile
+            Toast.makeText(getApplicationContext(), "session true", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "GameActivity", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

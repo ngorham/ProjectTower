@@ -14,4 +14,9 @@ package net.ngorham.projecttower;
 public class SavedFile {
     //Private variables
     //Player obj or Player.getId()?
+    private int id;
+    private int playerId;
+    private String playerName;
+    private String timestamp;
+    private String location;
 }
