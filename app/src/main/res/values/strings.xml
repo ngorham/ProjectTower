@@ -3,6 +3,13 @@
     <string name="new_game">New Game</string>
     <string name="load_game">Load Game</string>
     <string name="exit">Exit</string>
+    <!-- GameActivity -->
+    <string name="button_bag">Bag</string>
+    <string name="button_player">Player</string>
+    <string name="button_settings">Settings</string>
+    <!-- AlertDialogs -->
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_close">Close</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

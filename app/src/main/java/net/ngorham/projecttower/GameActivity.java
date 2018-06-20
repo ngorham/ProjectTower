@@ -1,16 +1,23 @@
 package net.ngorham.projecttower;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import net.ngorham.projecttower.BagContent.BagItem;
+import net.ngorham.projecttower.settings.SettingsContent;
 import net.ngorham.projecttower.settings.SettingsContent.SettingsItem;
 
 /**
@@ -26,15 +33,17 @@ import net.ngorham.projecttower.settings.SettingsContent.SettingsItem;
 
 public class GameActivity extends AppCompatActivity
         implements BagFragment.BagFragmentListener,
-        SettingsFragment.SettingsFragmentListener{
+        SettingsFragment.SettingsFragmentListener,
+        GameFragment.GameFragmentListener {
     //Private constants
     private final String TAG = "GameActivity";
     //Private variables
     private Context context;
     private SessionManager sessionManager;
+    private FragmentManager fragmentManager;
     //private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
+    //private TabLayout tabLayout;
+    //private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +53,17 @@ public class GameActivity extends AppCompatActivity
         context = this;
         //toolbar = (Toolbar)findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        viewPager = (ViewPager)findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        tabLayout = (TabLayout)findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        //viewPager = (ViewPager)findViewById(R.id.viewpager);
+        //setupViewPager(viewPager);
+        //tabLayout = (TabLayout)findViewById(R.id.tabs);
+        //tabLayout.setupWithViewPager(viewPager);
+        //Set up fragment
+        fragmentManager = getSupportFragmentManager();
+        Fragment fragment = new GameFragment();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.content_frame, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
         sessionManager = new SessionManager(getApplication());
         //gameManager = new GameManager();
         if(sessionManager.hasSession()){
@@ -130,6 +146,28 @@ public class GameActivity extends AppCompatActivity
         }
     }
 
+    //GameFragmentListener on button clicked
+    @Override
+    public void bagButtonClicked(){
+        Toast.makeText(getApplicationContext(), "Bag button clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Bag button clicked");
+        bagDialog();
+    }
+
+    @Override
+    public void playerButtonClicked(){
+        Toast.makeText(getApplicationContext(), "Player button clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Player button clicked");
+        playerDialog();
+    }
+
+    @Override
+    public void settingsButtonClicked(){
+        Toast.makeText(getApplicationContext(), "Settings button clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Settings button clicked");
+        settingsDialog();
+    }
+
     //Set up ViewPager
     private void setupViewPager(ViewPager viewPager){
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -138,5 +176,65 @@ public class GameActivity extends AppCompatActivity
         adapter.addFragment(new PlayerFragment(), "Player");
         adapter.addFragment(new SettingsFragment(), "Settings");
         viewPager.setAdapter(adapter);
+    }
+
+    //Display Bag AlertDialog
+    private void bagDialog(){
+        final BagArrayAdapter bagArrayAdapter =
+                new BagArrayAdapter(context, BagContent.ITEMS);
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setTitle(R.string.button_bag);
+        builder.setAdapter(bagArrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                BagItem item = bagArrayAdapter.getItem(which);
+                Toast.makeText(getApplicationContext(), "item id: " + item.getId() + "\ncontent: " + item.getContent(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "item id: " + item.getId() + "\ncontent: " + item.getContent());
+                //Microtransactions?
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_close, null);
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    //Display Player AlertDialog
+    private void playerDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setTitle(R.string.button_player);
+        View view = getLayoutInflater().inflate(R.layout.dialog_player, null);
+        builder.setView(view);
+        builder.setNegativeButton(R.string.dialog_close, null);
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    //Display Settings AlertDialog
+    private void settingsDialog(){
+        final SettingsArrayAdapter settingsArrayAdapter =
+                new SettingsArrayAdapter(context, SettingsContent.ITEMS);
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+        builder.setTitle(R.string.button_settings);
+        builder.setAdapter(settingsArrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SettingsItem item = settingsArrayAdapter.getItem(which);
+                Toast.makeText(getApplicationContext(), "item id: " + item.getId() + "\ncontent: " + item.getContent(), Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "item id: " + item.getId() + "\ncontent: " + item.getContent());
+                switch(item.getId()){
+                    case 0: //Bag settings
+                        break;
+                    case 1: //Save & Exit
+                        finish();
+                        break;
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.dialog_close, null);
+        builder.setCancelable(true);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
