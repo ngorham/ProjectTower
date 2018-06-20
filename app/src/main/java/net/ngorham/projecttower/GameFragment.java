@@ -4,6 +4,7 @@ package net.ngorham.projecttower;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import android.widget.Button;
  *
  */
 public class GameFragment extends Fragment {
+    //Private constants
+    private static final String TAG = "GameFragment";
     //Private variables
     private GameFragmentListener listener;
 
@@ -28,13 +31,21 @@ public class GameFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "INSIDE onCreate: called");
+        if(getArguments() != null){
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "INSIDE onCreateView: called");
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_game, container, false);
-        //Set up buttons
+        //Set up Buttons
         Button bagButton = layout.findViewById(R.id.button_bag);
         Button playerButton = layout.findViewById(R.id.button_player);
         Button settingsButton = layout.findViewById(R.id.button_settings);
@@ -63,17 +74,19 @@ public class GameFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d(TAG, "INSIDE onAttach: called");
         if (context instanceof GameFragmentListener) {
             listener = (GameFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement GameFragmentListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        Log.d(TAG, "INSIDE onDetach: called");
         listener = null;
     }
 

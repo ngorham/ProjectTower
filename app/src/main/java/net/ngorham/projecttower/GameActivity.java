@@ -32,11 +32,11 @@ import net.ngorham.projecttower.settings.SettingsContent.SettingsItem;
  */
 
 public class GameActivity extends AppCompatActivity
-        implements BagFragment.BagFragmentListener,
-        SettingsFragment.SettingsFragmentListener,
+        implements MainFragment.MainFragmentListener,
         GameFragment.GameFragmentListener {
     //Private constants
-    private final String TAG = "GameActivity";
+    private static final String TAG = "GameActivity";
+    private final String VISIBLE_FRAGMENT_TAG = "visible_fragment";
     //Private variables
     private Context context;
     private SessionManager sessionManager;
@@ -59,11 +59,7 @@ public class GameActivity extends AppCompatActivity
         //tabLayout.setupWithViewPager(viewPager);
         //Set up fragment
         fragmentManager = getSupportFragmentManager();
-        Fragment fragment = new GameFragment();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.content_frame, fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+        Fragment fragment = null;
         sessionManager = new SessionManager(getApplication());
         //gameManager = new GameManager();
         if(sessionManager.hasSession()){
@@ -71,16 +67,21 @@ public class GameActivity extends AppCompatActivity
             //Continue progress
             Toast.makeText(getApplicationContext(), "session is true", Toast.LENGTH_SHORT).show();
             sessionManager.setSession(false);
+            //Set up GameFragment
+            fragment = new GameFragment();
         } else {
             //New Game
-            sessionManager.setSession(true);
-            Toast.makeText(getApplicationContext(), "session set to true", Toast.LENGTH_SHORT).show();
-            //session = true
+            //Set up MainFragment
+            fragment = new MainFragment();
             //Create Player
             //gameManager.setPlayer(player);
             //create/write save file
             //start run
         }
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.content_frame, fragment, VISIBLE_FRAGMENT_TAG);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
     }
 
     @Override
@@ -125,25 +126,27 @@ public class GameActivity extends AppCompatActivity
         Log.d(TAG, "INSIDE onRestart: called");
     }
 
-    //BagFragmentListener on item clicked
+    //MainFragmentListener on textView clicked
     @Override
-    public void bagItemClicked(BagItem item){
-        Toast.makeText(getApplicationContext(), "item id: " + item.getId(), Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "item id: " + item.getId());
+    public void newGameClicked(){
+        Toast.makeText(getApplicationContext(), "newGame clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "newGame clicked");
+        //Set session to true
+        sessionManager.setSession(true);
+        //Replace fragment with GameFragment
+        Fragment fragment = new GameFragment();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(R.id.content_frame, fragment, VISIBLE_FRAGMENT_TAG);
+        ft.addToBackStack(null);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
     }
 
-    //SettingsFragmentListener on item clicked
     @Override
-    public void settingsItemClicked(SettingsItem item){
-        Toast.makeText(getApplicationContext(), "item content: " + item.getContent(), Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "item content: " + item.getContent());
-        switch(item.getId()){
-            case 0: //Bag settings
-                break;
-            case 1: //Save & Exit
-                finish();
-                break;
-        }
+    public void exitClicked(){
+        Toast.makeText(getApplicationContext(), "exit clicked", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "exit clicked");
+        finish();
     }
 
     //GameFragmentListener on button clicked
