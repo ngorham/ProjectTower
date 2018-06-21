@@ -5,20 +5,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import net.ngorham.projecttower.BagContent.BagItem;
-import net.ngorham.projecttower.settings.SettingsContent;
-import net.ngorham.projecttower.settings.SettingsContent.SettingsItem;
+import net.ngorham.projecttower.SettingsContent.SettingsItem;
 
 /**
  * Project Tower
@@ -41,9 +37,6 @@ public class GameActivity extends AppCompatActivity
     private Context context;
     private SessionManager sessionManager;
     private FragmentManager fragmentManager;
-    //private Toolbar toolbar;
-    //private TabLayout tabLayout;
-    //private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +44,6 @@ public class GameActivity extends AppCompatActivity
         setContentView(R.layout.activity_game);
         Log.d(TAG, "INSIDE onCreate: called");
         context = this;
-        //toolbar = (Toolbar)findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        //viewPager = (ViewPager)findViewById(R.id.viewpager);
-        //setupViewPager(viewPager);
-        //tabLayout = (TabLayout)findViewById(R.id.tabs);
-        //tabLayout.setupWithViewPager(viewPager);
         //Set up fragment
         fragmentManager = getSupportFragmentManager();
         Fragment fragment = null;
@@ -169,16 +156,6 @@ public class GameActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), "Settings button clicked", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Settings button clicked");
         settingsDialog();
-    }
-
-    //Set up ViewPager
-    private void setupViewPager(ViewPager viewPager){
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new GameFragment(), "Game");
-        adapter.addFragment(new BagFragment(), "Bag");
-        adapter.addFragment(new PlayerFragment(), "Player");
-        adapter.addFragment(new SettingsFragment(), "Settings");
-        viewPager.setAdapter(adapter);
     }
 
     //Display Bag AlertDialog

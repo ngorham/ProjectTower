@@ -1,4 +1,4 @@
-package net.ngorham.projecttower.settings;
+package net.ngorham.projecttower;
 
 import java.util.ArrayList;
 import java.util.HashMap;

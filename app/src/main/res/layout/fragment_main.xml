@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".MainActivity">
+    tools:context=".MainFragment">
     <TextView
         android:id="@+id/text_app_name"
         android:layout_width="match_parent"
@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:onClick="newGame"
         android:text="@string/new_game"
         app:layout_constraintBottom_toTopOf="@id/text_exit"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -36,7 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:onClick="exit"
         android:text="@string/exit"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

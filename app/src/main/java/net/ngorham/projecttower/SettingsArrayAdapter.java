@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import net.ngorham.projecttower.settings.SettingsContent.SettingsItem;
+import net.ngorham.projecttower.SettingsContent.SettingsItem;
 
 import java.util.List;
 
