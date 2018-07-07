@@ -1,17 +1,18 @@
 package net.ngorham.projecttower;
 
+import java.util.List;
+
 /**
  * Project Tower
- * Enemy.java
+ * Actor.java
  * POJO
- * Purpose: Provides local storage and access to a Enemy
+ * Purpose: Provides local storage and access to an Actor
  *
  * @author Neil Gorham
- * @version 1.0 06/16/2018
+ * @version 1.0 07/06/2018
  *
  */
-
-public class Enemy {
+public class Actor {
     //Private variables
     private int id;
     private String name;
@@ -25,18 +26,19 @@ public class Enemy {
     private int DEF; //Defense
     private int SPD; //Speed
     private int damage;
+    private double damageReduction = 1.0;
+    private List<BagItem> bag;
+    //private List<Skill> skills;
 
     //Default Constructor
-    public Enemy(){
-        this(0, "name", "createdOn", "lastModified",
-                0, 0, 0, 0,
-                0, 0, 0, 0);
+    public Actor(){
+        this(0, "Actor Name", "createdOn", "lastModified", 10, 10, 10, 10, 1, 1 , 1, 0, null);
     }
 
     //Loaded Constructor
-    public Enemy(int id, String name, String createdOn, String lastModified,
+    public Actor(int id, String name, String createdOn, String lastModified,
                  int currentHP, int maxHP, int currentAP, int maxAP,
-                 int ATK, int DEF, int SPD, int damage){
+                 int ATK, int DEF, int SPD, int damage, List<BagItem> bag){
         setId(id);
         setName(name);
         setCreatedOn(createdOn);
@@ -49,6 +51,7 @@ public class Enemy {
         setDEF(DEF);
         setSPD(SPD);
         setDamage(damage);
+        setBag(bag);
     }
 
     //Setter methods
@@ -76,6 +79,10 @@ public class Enemy {
 
     public void setDamage(int newDamage){ damage = newDamage; }
 
+    public void setDamageReduction(double newDamageReduction){ damageReduction = newDamageReduction; }
+
+    public void setBag(List<BagItem> newBag){ bag = newBag; }
+
     //Getter methods
     public int getId(){return id; }
 
@@ -101,6 +108,10 @@ public class Enemy {
 
     public int getDamage(){ return damage; }
 
+    public double getDamageReduction(){ return damageReduction; }
+
+    public List<BagItem> getBag(){ return bag; }
+
     public String toString(){
         return "id = " + id
                 + "\nname = " + name
@@ -113,6 +124,8 @@ public class Enemy {
                 + "\nATK = " + ATK
                 + "\nDEF = " + DEF
                 + "\nSPD = " + SPD
-                + "\ndamage = " + damage;
+                + "\ndamage = " + damage
+                + "\ndamageReduction = " + damageReduction;
     }
+
 }

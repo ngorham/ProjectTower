@@ -24,6 +24,7 @@ import android.widget.Button;
 public class GameFragment extends Fragment {
     //Private constants
     private static final String TAG = "GameFragment";
+    private static final int BAG_TAG = 0;
     //Private variables
     private GameFragmentListener listener;
 
@@ -53,7 +54,7 @@ public class GameFragment extends Fragment {
         bagButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                if(listener != null){ listener.bagButtonClicked(); }
+                if(listener != null){ listener.bagButtonClicked(BAG_TAG); }
             }
         });
         playerButton.setOnClickListener(new View.OnClickListener(){
@@ -91,7 +92,7 @@ public class GameFragment extends Fragment {
     }
 
     public interface GameFragmentListener {
-        void bagButtonClicked();
+        void bagButtonClicked(int bagTag);
         void playerButtonClicked();
         void settingsButtonClicked();
     }
